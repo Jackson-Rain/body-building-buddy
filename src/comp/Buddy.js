@@ -21,15 +21,21 @@ class Buddy extends React.Component {
             log: [], // list of completed exercises and reps
             settings: {
                 interval: 15 * 60,
+                bell: false,
+                speak: false,
+                mute: false,
             }
         };
 
         this.pass = this.pass.bind(this);
         this.log = this.log.bind(this);
         this.newExercise = this.newExercise.bind(this);
+
+        this.bell = new Audio('res/audio/ding3.mp3');
     }
 
     render() {
+        console.log('buddyrender');
         if (!this.state.started)
             return (<Start buddy={this}/>);
         
@@ -45,14 +51,14 @@ class Buddy extends React.Component {
                 return (
                     <div>
                         <Navbar buddy={this}/>
-                        <Exercises/>
+                        <Exercises buddy={this}/>
                     </div>
                 );
             case 'settings':
                 return (
                     <div>
                         <Navbar buddy={this}/>
-                        <Settings />
+                        <Settings buddy={this}/>
                     </div>
                 );
             default:
@@ -62,33 +68,12 @@ class Buddy extends React.Component {
         }
     }
 
-    componentDidMount() {
-        this.interval = setInterval(()=>{
-            if (!this.state.started) return;
-            let nextSec = this.state.seconds - 1;
-            if (nextSec === 0) {
-                this.setState({
-                    seconds: this.state.settings.interval
-                });
-                this.newExercise();
-            }
-            
-            this.setState({
-                seconds: this.state.seconds - 1
-            });
-        }, 1000);
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.interval);
-    }
-
     pass() {
         this.setState({choice: 'nothing'});
     }
 
     log() {
-        if (this.choice === 'nothing' || (this.state.log.length > 0 &&
+        if (this.state.choice === 'nothing' || (this.state.log.length > 0 &&
             this.state.lastPrompt === this.state.log[this.state.log.length-1].time)) {
             return;
         }
@@ -111,9 +96,15 @@ class Buddy extends React.Component {
         this.setState({
             choice: choice,
             reps: reps,
-            seconds: this.state.settings.interval,
             lastPrompt: new Date()
         });
+
+        this.resetClock(); // a function assigned by Clock component
+
+        if (!this.state.settings.mute) {
+            if (this.state.settings.bell) this.bell.play();        
+            // todo: speak prompt
+        }
     }
 }
 

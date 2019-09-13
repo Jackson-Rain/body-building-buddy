@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Clock from './Clock';
+
 class Status extends React.Component {
     constructor(props) {
         super(props);
@@ -12,8 +14,6 @@ class Status extends React.Component {
         if (this.props.buddy.state.choice != 'nothing')
             prompt = ( <div>Do {this.props.buddy.state.reps} {this.props.buddy.state.choice}</div> );
     
-        let time = new Date(this.props.buddy.state.seconds * 1000).toISOString().substr(11, 8);
-
         let log = [];
         for (let i=0; i<this.props.buddy.state.log.length; i++) {
             let line = (
@@ -28,7 +28,7 @@ class Status extends React.Component {
         return (
             <div>
                 <div>{prompt}</div>
-                <div>{time}</div>
+                <div><Clock buddy={this.props.buddy}/></div>
                 <div>
                     <input type="button" value="Pass" onClick={this.props.buddy.pass}></input>
                     { !this.props.buddy.state.autoLog && // oh so that's how you do it
