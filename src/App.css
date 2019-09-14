@@ -8,4 +8,34 @@ input[type=button] {
 
 table {
   margin: auto;
+  padding: 0;
+  border-spacing: 2px;
+  background-color: #5c697e;
+  min-width: 300px;
+}
+
+table.padded td {
+  padding: 4px
+}
+
+table thead tr:first-child {
+ background: #aaccbb;
+ font-size: 24;
+}
+
+tr {
+  background-color: #aabbdd;
+}
+/*tr:nth-child(odd) {
+  background-color: #aabbdd;
+}
+tr:nth-child(even) {
+  background-color: #bbaabb;
+}*/
+tr:hover {
+  background-color: #775577;
+}
+
+td {
+  text-align: center;
 }

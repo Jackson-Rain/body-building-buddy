@@ -12,19 +12,20 @@ class Buddy extends React.Component {
 
         this.state = {
             path: 'buddy', // used like a url
-            started: false,
-            exercises: {},
-            seconds: 3,
+            exercises: {},//work:1000}, //todo: set to empty again
             choice: 'nothing',
-            lastPrompt: new Date(),
+            lastPrompt: null,
+            mute: true,
             autoLog: true,
             log: [], // list of completed exercises and reps
             settings: {
                 interval: 15 * 60,
-                bell: false,
-                speak: false,
-                mute: false,
-            }
+                minPercent: 65,
+                maxPercent: 100,
+                bell: true,
+                speak: true,
+            },
+            canSpeak: false // todo: test in Buddy constructor to see if browser is capable of speech
         };
 
         this.pass = this.pass.bind(this);
@@ -36,7 +37,7 @@ class Buddy extends React.Component {
 
     render() {
         console.log('buddyrender');
-        if (!this.state.started)
+        if (Object.keys(this.state.exercises).length === 0)
             return (<Start buddy={this}/>);
         
         switch (this.state.path) {
@@ -92,7 +93,8 @@ class Buddy extends React.Component {
         if (this.state.autoLog) this.log();
         let keys = Object.keys(this.state.exercises);
         let choice = keys[Math.floor(Math.random() * keys.length)];
-        let reps = Math.round((0.6 + 0.4 * Math.random()) * this.state.exercises[choice]);
+        let percentRange = this.state.settings.maxPercent - this.state.settings.minPercent;
+        let reps = Math.round((this.state.settings.minPercent + percentRange * Math.random()) / 100 * this.state.exercises[choice]);
         this.setState({
             choice: choice,
             reps: reps,
@@ -101,10 +103,18 @@ class Buddy extends React.Component {
 
         this.resetClock(); // a function assigned by Clock component
 
-        if (!this.state.settings.mute) {
+        if (!this.state.mute) {
             if (this.state.settings.bell) this.bell.play();        
             // todo: speak prompt
         }
+    }
+
+    componentDidMount() {
+
+    }
+
+    componentWillUnmount() {
+
     }
 }
 

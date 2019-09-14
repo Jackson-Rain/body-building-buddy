@@ -1,15 +1,24 @@
 import React from 'react';
 
 class Exercises extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         let keys = Object.keys(this.props.buddy.state.exercises);
         let exercises = [];
         for (let i=0; i<keys.length; i++) {
-            let exercise = this.props.buddy.state.exercises[keys[i]];
             let row = (
                 <tr key={'key'+i}>
                     <td>{keys[i]}</td>
-                    <td>{exercise.amount}</td>
+                    <td><input type="number" id={'amount'+i} defaultValue={this.props.buddy.state.exercises[keys[i]]} onChange={()=>{
+                            let shallowCopy = Object.assign({}, this.props.buddy.state.exercises);
+                            shallowCopy[keys[i]] = document.getElementById('amount'+i).value;
+                            this.props.buddy.setState({
+                                exercises: shallowCopy
+                            });
+                    }}></input></td>
                     <td><input type="button" value="Delete" onClick={()=>{
                             // delete this exercise from buddy.state 
                             let shallowCopy = Object.assign({}, this.props.buddy.state.exercises);
@@ -17,7 +26,7 @@ class Exercises extends React.Component {
                             this.props.buddy.setState({
                                 exercises: shallowCopy
                             });
-                        }}></input></td>
+                        }}></input></td> 
                 </tr>
             );
             exercises.push(row);
@@ -25,7 +34,8 @@ class Exercises extends React.Component {
 
         return (
             <div>
-                <table>
+                <h1>Exercises</h1>
+                <table className="padded">
                     <thead>
                         <tr>
                             <td>Exercise</td>
@@ -34,12 +44,28 @@ class Exercises extends React.Component {
                         </tr>
                         {exercises}
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td><input type="button" value="Add"></input></td>
+                            <td><input type="text" id="addName"></input></td>
+                            <td><input type="number" id="addAmount"></input></td>
+                            <td><input type="button" value="Add" onClick={()=>{
+                                let name = document.getElementById('addName').value;
+                                let amount = document.getElementById('addAmount').value;
+                                let shallowCopy = Object.assign({}, this.props.buddy.state.exercises);
+                                shallowCopy[name] = amount;
+                                this.props.buddy.setState({
+                                    exercises: shallowCopy
+                                });
+                            }}></input></td>
                         </tr>
                     </thead>
                 </table>
+                <br/>
+                {/* <p>You can save your exercise data to a cookie, for the next time you use the program.</p>
+                <input type="button" value="Save to Cookie" onClick={()=>{
+                    // todo: save exercise data to cookie
+                }}></input>
+                <input type="button" value="Delete Cookie" onClick={()=>{
+                    console.log("OM NOM NOM NOM NOM");
+                }}></input> */}
             </div>
         );
     }

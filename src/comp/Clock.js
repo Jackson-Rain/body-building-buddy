@@ -4,7 +4,13 @@ class Clock extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = { seconds: 3 };
+        let secondsLeft = 3;
+        if (this.props.buddy.state.lastPrompt !== null) {
+            let sinceLast = (new Date() - this.props.buddy.state.lastPrompt) / 1000;
+            secondsLeft = this.props.buddy.state.settings.interval - sinceLast;
+        }
+
+        this.state = { seconds: secondsLeft };
 
         this.props.buddy.resetClock = ()=>{
             this.setState({
@@ -16,7 +22,9 @@ class Clock extends React.Component {
     render() {
         return (
             <div>
-                {new Date(this.state.seconds * 1000).toISOString().substr(11, 8)}
+                <h2 style={{marginBottom:0}}>
+                    {new Date(this.state.seconds * 1000).toISOString().substr(11, 8)}
+                </h2>
             </div>
         );
     }

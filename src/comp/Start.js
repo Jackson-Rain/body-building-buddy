@@ -35,13 +35,13 @@ class Start extends React.Component {
         return (            
             <div>
                 <h1>Welcome!</h1>
-                <div>Select some starter exercises, you can add more in the settings tab later.</div>
-                <table>
+                <p>Select some starter exercises, you can add more in the settings tab later.</p>
+                <table className="padded">
                     <tbody>
                         {rows}
                     </tbody>
                 </table>
-                <input type="button" value="Start" onClick={this.begin.bind(this)}></input>
+                <p><input type="button" value="Start" onClick={this.begin.bind(this)}></input></p>
             </div>
         );
     }
