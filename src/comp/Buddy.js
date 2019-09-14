@@ -9,22 +9,50 @@ import Settings from './Settings';
 class Buddy extends React.Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            path: 'buddy', // used like a url
-            exercises: {},//work:1000}, //todo: set to empty again
-            choice: 'nothing',
-            lastPrompt: null,
-            mute: true,
-            autoLog: true,
-            log: [], // list of completed exercises and reps
-            settings: {
+        
+        // defaults
+        this.defaultSettings = ()=>{
+            return {
                 interval: 15 * 60,
                 minPercent: 65,
                 maxPercent: 100,
                 bell: true,
                 speak: true,
-            },
+            };
+        };
+
+        let exercises = {};
+        let settings = this.defaultSettings();
+
+        console.log(document.cookie);
+        let cookies = document.cookie.split('; ');
+        cookies.forEach((cookie)=>{
+            if (cookie.startsWith('bodybuildingbuddy_ex=')) {
+                let pairs = cookie.substring(21).split('|');
+                    pairs.forEach((pair)=>{
+                        let fields = pair.split('#');
+                        exercises[fields[0].replace('_', ' ')] = Number(fields[1]);
+                    });
+            } else if (cookie.startsWith('bodybuildingbuddy_se=')) {
+                settings = {};
+                let pairs = cookie.substring(21).split('|');
+                settings.interval = Number(pairs[0].split(':')[1]);
+                settings.minPercent = Number(pairs[1].split(':')[1]);
+                settings.maxPercent = Number(pairs[2].split(':')[1]);
+                settings.bell = pairs[3].endsWith('true');
+                settings.speak = pairs[4].endsWith('true');
+            }
+        });
+
+        this.state = {
+            path: 'buddy', // used like a url
+            exercises: exercises,
+            choice: 'nothing',
+            lastPrompt: null,
+            mute: true,
+            autoLog: true,
+            log: [], // list of completed exercises and reps
+            settings: settings,
             canSpeak: false // todo: test in Buddy constructor to see if browser is capable of speech
         };
 
@@ -90,6 +118,8 @@ class Buddy extends React.Component {
     }
 
     newExercise() {
+        console.log(this.state.settings);
+
         if (this.state.autoLog) this.log();
         let keys = Object.keys(this.state.exercises);
         let choice = keys[Math.floor(Math.random() * keys.length)];

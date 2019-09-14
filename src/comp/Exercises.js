@@ -1,10 +1,6 @@
 import React from 'react';
 
 class Exercises extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         let keys = Object.keys(this.props.buddy.state.exercises);
         let exercises = [];
@@ -59,13 +55,19 @@ class Exercises extends React.Component {
                     </thead>
                 </table>
                 <br/>
-                {/* <p>You can save your exercise data to a cookie, for the next time you use the program.</p>
+                <p>You can save your exercise data to a cookie, for the next time you use the program.</p>
                 <input type="button" value="Save to Cookie" onClick={()=>{
-                    // todo: save exercise data to cookie
+                    let data = '';
+                    let keys = Object.keys(this.props.buddy.state.exercises);
+                    keys.forEach((key)=>{
+                        if (data.length > 0) data += '|';
+                        data += key.replace(' ', '_') + '#' + this.props.buddy.state.exercises[key];
+                    });
+                    document.cookie = 'bodybuildingbuddy_ex=' + data + '; expires=' + new Date(new Date().getTime() + 1000*3600*24*365*2).toUTCString();
                 }}></input>
                 <input type="button" value="Delete Cookie" onClick={()=>{
-                    console.log("OM NOM NOM NOM NOM");
-                }}></input> */}
+                    document.cookie = 'bodybuildingbuddy_ex=OMNOMNOM; expires=' + new Date(new Date().getTime() - 1000*3600*24*365*2).toUTCString();
+                }}></input>
             </div>
         );
     }

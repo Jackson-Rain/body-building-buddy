@@ -3,21 +3,10 @@ import React from 'react';
 import Clock from './Clock';
 
 class Status extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.toggleMute = this.toggleMute.bind(this);
-        this.toggleAutoLog = this.toggleAutoLog.bind(this);
-    }
-
     render() {
         let prompt = (<div>Do nothing</div>);
-        if (this.props.buddy.state.choice != 'nothing')
+        if (this.props.buddy.state.choice !== 'nothing')
             prompt = ( <div>Do {this.props.buddy.state.reps} {this.props.buddy.state.choice}</div> );
-    
-        let chkMute = (this.props.buddy.state.mute) ?
-            (<input type="checkbox" id="chkMute" defaultChecked></input>) :
-            (<input type="checkbox" id="chkMute"></input>) ;
 
         let log = [];
         for (let i=0; i<this.props.buddy.state.log.length; i++) {
@@ -36,8 +25,16 @@ class Status extends React.Component {
                 <div><h2>{prompt}</h2></div>
                 <div>
                     <Clock buddy={this.props.buddy}/>
-                   {chkMute} Mute
-                   <p></p>
+                    <div>
+                        <input type="checkbox" id="chkMute" checked={this.props.buddy.state.mute} onChange={()=>{
+                            let chk = document.getElementById('chkMute');
+                            this.props.buddy.setState({
+                                mute: chk.checked
+                            });
+                        }}></input>
+                        Mute
+                    </div>
+                    <p></p>
                 </div>
                 <div>
                     <input type="button" value="Pass" onClick={this.props.buddy.pass}></input>
@@ -46,7 +43,12 @@ class Status extends React.Component {
                     <input type="button" value="Fast Forward" onClick={this.props.buddy.newExercise}></input>
                 </div>
                 <div>
-                    <input type="checkbox" id="chkAutoLog" value="Log all exercise" defaultChecked></input>
+                    <input type="checkbox" id="chkAutoLog" checked={this.props.buddy.state.autoLog} onChange={()=>{
+                        let chk = document.getElementById('chkAutoLog');
+                        this.props.buddy.setState({
+                            autoLog: chk.checked
+                        });
+                    }}></input>
                     Automatically log exercise
                 </div>
                 <div><h3>History:</h3></div>
@@ -65,39 +67,6 @@ class Status extends React.Component {
             </div>
         );
     }
-
-    componentDidMount() {
-        let chk = document.getElementById('chkMute');
-        chk.addEventListener('change', this.toggleMute);
-        
-        chk = document.getElementById('chkAutoLog');
-        chk.checked = this.props.buddy.state.autoLog;
-        chk.addEventListener('change', this.toggleAutoLog);
-    }
-
-    componentWillUnmount() {
-        let chk = document.getElementById('chkMute');
-        chk.removeEventListener('change', this.toggleMute);
-
-        chk = document.getElementById('chkAutoLog');
-        chk.removeEventListener('change', this.toggleAutoLog);
-    }
-
-    toggleMute() {
-        let chk = document.getElementById('chkMute');
-        if (chk == null) return;
-        this.props.buddy.setState({
-            mute: chk.checked
-        });
-    }
-
-    toggleAutoLog() {
-        let chk = document.getElementById('chkAutoLog');
-        if (chk == null) return;
-        this.props.buddy.setState({
-            autoLog: chk.checked
-        });
-    };
 }
 
 export default Status;

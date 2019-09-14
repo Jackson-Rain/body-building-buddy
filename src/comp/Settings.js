@@ -2,14 +2,6 @@ import React from 'react';
 
 class Settings extends React.Component {
     render() {
-        let chkBell = (this.props.buddy.state.settings.bell) ?
-            (<input type="checkbox" id="chkBell" defaultChecked></input>) :
-            (<input type="checkbox" id="chkBell"></input>) ;
-        
-        let chkSpeak = (this.props.buddy.state.settings.speak) ?
-            (<input type="checkbox" id="chkAlarm" defaultChecked></input>) :
-            (<input type="checkbox" id="chkAlarm"></input>) ;
-
         return (
             <div>
                 <h1>Settings</h1>
@@ -17,7 +9,7 @@ class Settings extends React.Component {
                     <tbody>
                         <tr>
                             <td>Time between exercises (minutes)</td>
-                            <td><input type="number" id="numInterval" defaultValue={this.props.buddy.state.settings.interval/60} onChange={()=>{
+                            <td><input type="number" id="numInterval" value={this.props.buddy.state.settings.interval/60} onChange={()=>{
                                 let shallowCopy = Object.assign({}, this.props.buddy.state.settings);
                                 shallowCopy.interval = Number(document.getElementById('numInterval').value*60);
                                 this.props.buddy.setState({ settings: shallowCopy });
@@ -25,53 +17,52 @@ class Settings extends React.Component {
                         </tr>
                         <tr>
                             <td>Minimum set amount (percent of max)</td>
-                            <td><input type="number" id="minPercent" defaultValue={this.props.buddy.state.settings.minPercent} onChange={()=>{
+                            <td><input type="number" id="minPercent" value={this.props.buddy.state.settings.minPercent} onChange={()=>{
                                 let shallowCopy = Object.assign({}, this.props.buddy.state.settings);
-                                shallowCopy.minPercent = Number(document.getElementById('minPercent').value*60);
+                                shallowCopy.minPercent = Number(document.getElementById('minPercent').value);
                                 this.props.buddy.setState({ settings: shallowCopy });
                             }}></input></td>
                         </tr>
                         <tr>
                             <td>Maximum set amount (percent of max)</td>
-                            <td><input type="number" id="maxPercent" defaultValue={this.props.buddy.state.settings.maxPercent} onChange={()=>{
+                            <td><input type="number" id="maxPercent" value={this.props.buddy.state.settings.maxPercent} onChange={()=>{
                                 let shallowCopy = Object.assign({}, this.props.buddy.state.settings);
-                                shallowCopy.maxPercent = Number(document.getElementById('maxPercent').value*60);
+                                shallowCopy.maxPercent = Number(document.getElementById('maxPercent').value);
                                 this.props.buddy.setState({ settings: shallowCopy });
                             }}></input></td>
                         </tr>
                         <tr>
                             <td>Alarm bell</td>
-                            <td>{chkBell}</td>
+                            <td><input type="checkbox" id="chkBell" checked={this.props.buddy.state.settings.bell} onChange={()=>{
+                                let chk = document.getElementById('chkBell');
+                                let shallowCopy = Object.assign({}, this.props.buddy.state.settings);
+                                shallowCopy.bell = chk.checked;
+                                this.props.buddy.setState({
+                                    settings: shallowCopy
+                                });
+                            }}></input></td>
                         </tr>
                         {this.props.buddy.state.canSpeak && (
                         <tr>
                             <td>Robot voice<br /></td>
-                            <td>{chkSpeak}</td>
+                            <td><input type="checkbox" id="chkSpeak" checked={this.props.buddy.state.settings.speak} onChange={()=>{
+                                let chk = document.getElementById('chkSpeak');
+                                let shallowCopy = Object.assign({}, this.props.buddy.state.settings);
+                                shallowCopy.speak = chk.checked;
+                                this.props.buddy.setState({
+                                    settings: shallowCopy
+                                });
+                            }}></input></td>
                         </tr>)}
-                        
                     </tbody>
                 </table>
+                <p><input type="button" value="Set to defaults" onClick={()=>{
+                            this.props.buddy.setState({
+                                settings: this.props.buddy.defaultSettings()
+                            });
+                        }}></input></p>
             </div>
         );
-    }
-
-    toggleBell() {
-        let chk = document.getElementById('chkBell');
-        if (chk == null) return;
-        let shallowCopy = Object.assign({}, this.props.buddy.state.settings);
-        shallowCopy.bell = chk.checked;
-        this.props.buddy.setState({
-            settings: shallowCopy
-        });
-    }
-
-    toggleSpeak() {
-        let chk = document.getElementById('chkSpeak');
-        let shallowCopy = Object.assign({}, this.props.buddy.state.settings);
-        shallowCopy.speak = chk.checked;
-        this.props.buddy.setState({
-            settings: shallowCopy
-        });
     }
 }
 
