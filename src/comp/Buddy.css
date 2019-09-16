@@ -1,0 +1,38 @@
+.BodyBuildingBuddy {
+    text-align: center;
+  }
+  
+  .BodyBuildingBuddy input[type=button] {
+    padding: 8px;
+  }
+  
+  .BodyBuildingBuddy table {
+    margin: auto;
+    padding: 0;
+    border-spacing: 2px;
+    background-color: #5c697e;
+    min-width: 300px;
+  }
+  
+  .BodyBuildingBuddy table.padded td {
+    padding: 4px
+  }
+  
+  .BodyBuildingBuddy table thead tr:first-child {
+   background: #aaccbb;
+   font-size: 24;
+  }
+  
+  .BodyBuildingBuddy tr {
+    background-color: #aabbdd;
+  }
+  /* .BodyBuildingBuddy tr:nth-child(even) {
+    background-color: #bbaabb;
+  } */
+  .BodyBuildingBuddy tr:hover {
+    background-color: #775577;
+  }
+  
+  .BodyBuildingBuddy td {
+    text-align: center;
+  }

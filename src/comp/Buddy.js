@@ -6,6 +6,8 @@ import Status from './Status';
 import Exercises from './Exercises';
 import Settings from './Settings';
 
+import './Buddy.css';
+
 class Buddy extends React.Component {
     constructor(props) {
         super(props);
@@ -49,7 +51,7 @@ class Buddy extends React.Component {
             exercises: exercises,
             choice: 'nothing',
             lastPrompt: null,
-            mute: true,
+            mute: false,
             autoLog: true,
             log: [], // list of completed exercises and reps
             settings: settings,
@@ -68,33 +70,32 @@ class Buddy extends React.Component {
         if (Object.keys(this.state.exercises).length === 0)
             return (<Start buddy={this}/>);
         
+        let inner;
         switch (this.state.path) {
             case 'buddy':
-                return (
-                    <div>
-                        <Navbar buddy={this}/>
-                        <Status buddy={this}/>
-                    </div>
-                );
+                inner = (
+                    <Status buddy={this}/>
+                ); break;
             case 'exercises':
-                return (
-                    <div>
-                        <Navbar buddy={this}/>
-                        <Exercises buddy={this}/>
-                    </div>
-                );
+                inner = (
+                    <Exercises buddy={this}/>
+                ); break;
             case 'settings':
-                return (
-                    <div>
-                        <Navbar buddy={this}/>
-                        <Settings buddy={this}/>
-                    </div>
-                );
+                inner = (
+                    <Settings buddy={this}/>
+                ); break;
             default:
-                return (
+                inner = (
                     <div>Invalid path: {this.state.path}</div>
-                );
+                ); break;
         }
+
+        return (
+            <div className="BodyBuildingBuddy">
+                <Navbar buddy={this}/>
+                {inner}
+            </div>
+        )
     }
 
     pass() {
