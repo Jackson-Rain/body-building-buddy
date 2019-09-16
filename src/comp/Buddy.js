@@ -68,7 +68,10 @@ class Buddy extends React.Component {
     render() {
         console.log('buddyrender');
         if (Object.keys(this.state.exercises).length === 0)
-            return (<Start buddy={this}/>);
+            return (
+                <div className="BodyBuildingBuddy">
+                    <Start buddy={this}/>
+                </div>);
         
         let inner;
         switch (this.state.path) {
