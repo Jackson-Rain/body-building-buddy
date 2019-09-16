@@ -51,7 +51,7 @@ class Buddy extends React.Component {
             exercises: exercises,
             choice: 'nothing',
             lastPrompt: null,
-            mute: false,
+            mute: true,
             autoLog: true,
             log: [], // list of completed exercises and reps
             settings: settings,
