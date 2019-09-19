@@ -62,7 +62,7 @@ class Buddy extends React.Component {
         this.log = this.log.bind(this);
         this.newExercise = this.newExercise.bind(this);
 
-        this.bell = new Audio('res/audio/ding3.mp3');
+        this.bell = new Audio('/res/audio/ding3.mp3');
     }
 
     render() {
