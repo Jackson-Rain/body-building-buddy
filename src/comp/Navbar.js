@@ -9,17 +9,19 @@ class Navbar extends React.Component {
     render() {
         return (
             <div>
-                <input type="button" value="Buddy" onClick={()=>{
+                <div className="BigButton" onClick={()=>{
                     if (this.props.buddy.state.path === 'settings')
                         this.settingsToCookie();
                     this.props.buddy.setState({path:'buddy'});
-                }}></input>
-                <input type="button" value="Exercises" onClick={()=>{
+                }}>Buddy</div>
+                <div className="BigButton" onClick={()=>{
                     if (this.props.buddy.state.path === 'settings')
                         this.settingsToCookie();
                     this.props.buddy.setState({path:'exercises'});
-                }}></input>
-                <input type="button" value="Settings" onClick={()=>{this.props.buddy.setState({path:'settings'});}}></input>
+                }}>Exercises</div>
+                <div className="BigButton" onClick={()=>{
+                    this.props.buddy.setState({path:'settings'});
+                }}>Settings</div>
             </div>
         );
     }

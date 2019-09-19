@@ -15,14 +15,14 @@ class Exercises extends React.Component {
                                 exercises: shallowCopy
                             });
                     }}></input></td>
-                    <td><input type="button" value="Delete" onClick={()=>{
+                    <td><div className="BigButton" onClick={()=>{
                             // delete this exercise from buddy.state 
                             let shallowCopy = Object.assign({}, this.props.buddy.state.exercises);
                             delete shallowCopy[keys[i]];
                             this.props.buddy.setState({
                                 exercises: shallowCopy
                             });
-                        }}></input></td> 
+                        }}>Delete</div></td> 
                 </tr>
             );
             exercises.push(row);
@@ -42,7 +42,7 @@ class Exercises extends React.Component {
                         <tr>
                             <td><input type="text" id="addName"></input></td>
                             <td><input type="number" id="addAmount"></input></td>
-                            <td><input type="button" value="Add" onClick={()=>{
+                            <td><div className="BigButton" onClick={()=>{
                                 let name = document.getElementById('addName').value;
                                 let amount = document.getElementById('addAmount').value;
                                 let shallowCopy = Object.assign({}, this.props.buddy.state.exercises);
@@ -50,13 +50,13 @@ class Exercises extends React.Component {
                                 this.props.buddy.setState({
                                     exercises: shallowCopy
                                 });
-                            }}></input></td>
+                            }}>Add</div></td>
                         </tr>
                     </thead>
                 </table>
                 <br/>
                 <p>You can save your exercise data to a cookie, for the next time you use the program.</p>
-                <input type="button" value="Save to Cookie" onClick={()=>{
+                <div className="BigButton" onClick={()=>{
                     let data = '';
                     let keys = Object.keys(this.props.buddy.state.exercises);
                     keys.forEach((key)=>{
@@ -64,10 +64,10 @@ class Exercises extends React.Component {
                         data += key.replace(' ', '_') + '#' + this.props.buddy.state.exercises[key];
                     });
                     document.cookie = 'bodybuildingbuddy_ex=' + data + '; expires=' + new Date(new Date().getTime() + 1000*3600*24*365*2).toUTCString();
-                }}></input>
-                <input type="button" value="Delete Cookie" onClick={()=>{
+                }}>Save to Cookie</div>
+                <div className="BigButton" onClick={()=>{
                     document.cookie = 'bodybuildingbuddy_ex=OMNOMNOM; expires=' + new Date(new Date().getTime() - 1000*3600*24*365*2).toUTCString();
-                }}></input>
+                }}>Delete Cookie</div>
             </div>
         );
     }

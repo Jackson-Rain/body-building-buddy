@@ -56,11 +56,11 @@ class Settings extends React.Component {
                         </tr>)}
                     </tbody>
                 </table>
-                <p><input type="button" value="Set to defaults" onClick={()=>{
+                <p><div className="BigButton" onClick={()=>{
                             this.props.buddy.setState({
                                 settings: this.props.buddy.defaultSettings()
                             });
-                        }}></input></p>
+                        }}>Set to defaults</div></p>
             </div>
         );
     }

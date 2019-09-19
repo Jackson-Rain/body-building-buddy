@@ -37,10 +37,10 @@ class Status extends React.Component {
                     <p></p>
                 </div>
                 <div>
-                    <input type="button" value="Pass" onClick={this.props.buddy.pass}></input>
+                    <div className="BigButton" onClick={this.props.buddy.pass}>Pass</div>
                     { !this.props.buddy.state.autoLog && // oh so that's how you do it
-                    <input type="button" value="Done" onClick={this.props.buddy.log}></input> }
-                    <input type="button" value="Fast Forward" onClick={this.props.buddy.newExercise}></input>
+                    <div className="BigButton" onClick={this.props.buddy.log}>Done</div> }
+                    <div className="BigButton" onClick={this.props.buddy.newExercise}>Fast Forward</div>
                 </div>
                 <div>
                     <input type="checkbox" id="chkAutoLog" checked={this.props.buddy.state.autoLog} onChange={()=>{

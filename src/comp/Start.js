@@ -41,7 +41,7 @@ class Start extends React.Component {
                         {rows}
                     </tbody>
                 </table>
-                <p><input type="button" value="Start" onClick={this.begin.bind(this)}></input></p>
+                <p><div className="BigButton" onClick={this.begin.bind(this)}>Start</div></p>
             </div>
         );
     }
