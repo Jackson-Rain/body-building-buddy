@@ -1,4 +1,10 @@
 .BodyBuildingBuddy {
+  --table-bg-dark: rgb(70, 111, 156);
+  --td-bg: rgb(73, 151, 184);
+  --td-bg-hover: rgb(99, 182, 218);
+  --button: #DC9853;
+  --button-hover: #BA6460;
+  --button-active: rgb(192, 66, 59);
   text-align: center;
 }
 
@@ -6,7 +12,7 @@
   margin: auto;
   padding: 0;
   border-spacing: 2px;
-  background-color: #5c697e;
+  background-color: var(--table-bg-dark);
   min-width: 300px;
 }
 
@@ -15,20 +21,17 @@
 }
 
 .BodyBuildingBuddy table thead tr:first-child {
-  background: #aaccbb;
-  font-size: 24;
+  background: var(--table-bg-dark);
+  font-size: 1.2em;
+  color: #ddd;
 }
 
 .BodyBuildingBuddy tr {
-  background-color: #aabbdd;
+  background-color: var(--td-bg);
 }
 
-/* .BodyBuildingBuddy tr:nth-child(even) {
-  background-color: #bbaabb;
-} */
-
 .BodyBuildingBuddy tr:hover {
-  background-color: #775577;
+  background-color: var(--td-bg-hover);
 }
 
 .BodyBuildingBuddy td {
@@ -46,11 +49,10 @@
 
 .BodyBuildingBuddy .BigButton {
   display: inline-block;
-  background: #ddd;
+  background: var(--button);
   border-radius: 8px;
   padding: 8px;
   margin: 4px 2px;
-
   
   /* unselectable */
   -webkit-touch-callout: none;
@@ -62,5 +64,9 @@
 }
 
 .BodyBuildingBuddy .BigButton:hover {
-  background: #dd0;
+  background: var(--button-hover);
+}
+
+.BodyBuildingBuddy .BigButton:active {
+  background: var(--button-active);
 }
