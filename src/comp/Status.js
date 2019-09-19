@@ -37,8 +37,9 @@ class Status extends React.Component {
                     <p></p>
                 </div>
                 <div>
-                    <div className="BigButton" onClick={this.props.buddy.pass}>Pass</div>
-                    { !this.props.buddy.state.autoLog && // oh so that's how you do it
+                    { this.props.buddy.state.autoLog && // oh so that's how you do it
+                    <div className="BigButton" onClick={this.props.buddy.pass}>Pass</div> }
+                    { !this.props.buddy.state.autoLog &&
                     <div className="BigButton" onClick={this.props.buddy.log}>Done</div> }
                     <div className="BigButton" onClick={this.props.buddy.newExercise}>Fast Forward</div>
                 </div>
