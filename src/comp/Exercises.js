@@ -8,7 +8,7 @@ class Exercises extends React.Component {
             let row = (
                 <tr key={'key'+i}>
                     <td>{keys[i]}</td>
-                    <td><input type="number" id={'amount'+i} defaultValue={this.props.buddy.state.exercises[keys[i]]} onChange={()=>{
+                    <td><input type="number" id={'amount'+i} value={this.props.buddy.state.exercises[keys[i]]} onChange={()=>{
                             let shallowCopy = Object.assign({}, this.props.buddy.state.exercises);
                             shallowCopy[keys[i]] = document.getElementById('amount'+i).value;
                             this.props.buddy.setState({
